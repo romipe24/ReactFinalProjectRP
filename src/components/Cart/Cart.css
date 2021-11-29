@@ -1,0 +1,19 @@
+.card-cart{
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+@media (max-width:768px){
+    .card-cart{
+        width: 90%;
+    }
+}
+.card-cart h3, 
+.card-cart h6{
+    font-family: 'Work Sans', sans-serif;
+}
+.card-cart h3{
+    margin-top: 10px;
+}

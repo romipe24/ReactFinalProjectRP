@@ -1,0 +1,9 @@
+h1 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 30px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+.row-list-container {
+  margin: 0 auto !important;
+}

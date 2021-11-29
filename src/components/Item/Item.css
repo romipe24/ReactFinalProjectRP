@@ -1,0 +1,24 @@
+.card {
+  border: 1px solid transparent;
+}
+.card-title {
+  font-family: "Montserrat", sans-serif;
+}
+.card-price {
+  font-size: 30px;
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+}
+.btn-store {
+  background-color: transparent;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  color: #666;
+  padding: 9px 28px;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+.btn-store:hover {
+  background-color: purple;
+  border: 2px solid purple;
+  color: white;
+}
