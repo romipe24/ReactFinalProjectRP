@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -7,7 +7,8 @@ import { NavLink } from "react-router-dom";
 
 const Item = ({ product }) => {
   /* console.log('Product', product) */
-  const { id, image, name, price } = product;
+  const { id, image, name, price, category } = product;
+
   return (
     <Col className="col" lg={3} key={id}>
       <Card>
