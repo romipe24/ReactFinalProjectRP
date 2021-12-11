@@ -8,15 +8,14 @@ import { useCartContext } from "../CartContext/CartContext";
 import ItemCount from "../Counter/Counter";
 
 const ItemDetail = ({ producto }) => {
-  const [count, setCount] = useState(1);
-  const [carrito, setCarrito] = useCartContext();
+  const [counter, setCounter] = useState(1);
+  // ojo que aca le cambie el[]
+  const { addItem, carrito } = useCartContext();
+  const price = producto.price;
 
-  function agregarProducto() {
-    const temporal = carrito;
-    temporal.push({ ...producto, cantidad: count });
-    setCarrito(temporal);
-    console.log(temporal);
-  }
+  const addToCart = () => {
+    addItem({ ...producto, quantity: counter });
+  };
 
   //  Lo comento pq no anda y seria para asociarlo con Counter y poner el numero que se quiere de productos desde aca
   // function onAdd(cant) {
@@ -31,9 +30,10 @@ const ItemDetail = ({ producto }) => {
       </Col>
       <Col lg="6" className="card-details-text">
         <h2>{producto.name}</h2>
-        <h3>$UY{producto.price}</h3>
+        <h3>$UY{parseFloat(price)}</h3>
         <p>{producto.description}</p>
-        <Button variant="primary" onClick={agregarProducto}>
+        <ItemCount counter={counter} setCounter={setCounter} />
+        <Button variant="primary" onClick={addToCart}>
           Agregar al carrito
         </Button>
         {/* Lo oculto pq no pude hacer que me ande  */}

@@ -2,49 +2,68 @@ import React, { useContext, useEffect, useState } from "react";
 import { Col, Container, ListGroup, Row, Image } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useCartContext } from "../CartContext/CartContext";
+import { Link } from "react-router-dom";
 import "./Cart.css";
 
 const Cart = () => {
-  const [carrito, vaciarCarrito] = useCartContext();
-  let [total, setTotal] = useState(0);
-
-  useEffect(() => {
-    let subtotal = 0;
-    carrito.map((producto) => {
-      //no funciona
-      subtotal = subtotal + producto.price;
-    });
-    setTotal(subtotal);
-  }, []);
+  const { carrito, vaciarCarrito, removeItem, subtotalProduct, totalToPay } =
+    useCartContext();
 
   return (
-    <Container style={{ alignItems: "center" }}>
-      {carrito.map((producto) => {
-        return (
-          <ListGroup>
-            <Row>
-              <Col xs={6} md={3}>
-                <Image src={producto.image} width="100px" />
-              </Col>
-              <Col xs={6} md={3}>
-                <h1>{producto.name}</h1>
-              </Col>
-              <Col xs={6} md={3}>
-                {producto.cantidad}
-              </Col>
+    <div>
+      {carrito.length === 0 ? (
+        <div>
+          <h3> Lo siento no tiene elementos en el carrito</h3>
+          <Link to={"/"}>
+            <button className="btn-white">Continuar comprando</button>
+          </Link>
+        </div>
+      ) : (
+        <Container style={{ alignItems: "center" }}>
+          {carrito.map((producto) => {
+            return (
+              <ListGroup>
+                <Row>
+                  <Col xs={6} md={3}>
+                    <Image src={producto.image} width="100px" />
+                  </Col>
+                  <Col xs={6} md={3}>
+                    <h1>{producto.name}</h1>
+                  </Col>
+                  <Col xs={6} md={3}>
+                    {producto.quantity}
+                  </Col>
 
-              <Col xs={6} md={3}>
-                $UY {producto.price}
-              </Col>
-            </Row>
-          </ListGroup>
-        );
-      })}
-      <h1> Total a pagar: {total} </h1>
-      <Button variant="primary" onClick={() => vaciarCarrito()}>
-        Vaciar Carrito
-      </Button>
-    </Container>
+                  <Col xs={6} md={3}>
+                    $UY {parseFloat(producto.price)}
+                  </Col>
+                  <Col>
+                    $UY {subtotalProduct(producto.price, producto.quantity)}
+                  </Col>
+                  <Col>
+                    <i
+                      onClick={() => {
+                        removeItem(producto.id);
+                      }}
+                      class="far fa-trash-alt"
+                    ></i>
+                  </Col>
+                </Row>
+              </ListGroup>
+            );
+          })}
+          <div className="btn-section">
+            <Link to={"/"}>
+              <button className="btn-white">Continuar comprando</button>
+            </Link>
+            <h4>Total a pagar: $UY {totalToPay()}</h4>
+            <button className="btn-white btn-delete" onClick={vaciarCarrito}>
+              Vaciar Carrito
+            </button>
+          </div>
+        </Container>
+      )}
+    </div>
 
     //para cuando no hay items
     // <Card className="card-cart" body>
