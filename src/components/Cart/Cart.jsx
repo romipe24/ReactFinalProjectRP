@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Col, Container, ListGroup, Row, Image } from "react-bootstrap";
-import Card from "react-bootstrap/Card";
-import { CartContext } from "../CartContext/CartContext";
+import Button from "react-bootstrap/Button";
+import { useCartContext } from "../CartContext/CartContext";
 import "./Cart.css";
 
 const Cart = () => {
-  const [carrito] = useContext(CartContext);
+  const [carrito, vaciarCarrito] = useCartContext();
   let [total, setTotal] = useState(0);
 
   useEffect(() => {
     let subtotal = 0;
     carrito.map((producto) => {
+      //no funciona
       subtotal = subtotal + producto.price;
     });
     setTotal(subtotal);
@@ -19,7 +20,6 @@ const Cart = () => {
   return (
     <Container style={{ alignItems: "center" }}>
       {carrito.map((producto) => {
-        console.log(producto);
         return (
           <ListGroup>
             <Row>
@@ -41,6 +41,9 @@ const Cart = () => {
         );
       })}
       <h1> Total a pagar: {total} </h1>
+      <Button variant="primary" onClick={() => vaciarCarrito()}>
+        Vaciar Carrito
+      </Button>
     </Container>
 
     //para cuando no hay items

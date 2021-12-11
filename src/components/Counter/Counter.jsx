@@ -1,11 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useState } from "react";
-import { CartContext } from "../CartContext/CartContext";
 import "./Counter.css";
 
-const Counter = () => {
+function ItemCount({ stock = 1, onAdd }) {
   const [counter, setCounter] = useState(1);
-  const { carrito, agregarProducto } = useContext(CartContext);
 
   const handlerClickLess = () => {
     setCounter(counter - 1);
@@ -16,8 +14,11 @@ const Counter = () => {
   };
   const handlerClickMore = () => {
     setCounter(counter + 1);
-    console.log(counter);
   };
+
+  function Saludar() {
+    console.log("saludar ");
+  }
   return (
     <div className="counter-wrapper">
       <div className="button" onClick={handlerClickLess}>
@@ -27,8 +28,10 @@ const Counter = () => {
       <div className="button" onClick={handlerClickMore}>
         <i class="fas fa-angle-right"></i>
       </div>
+      {/* Lo oculto pq no me anda  */}
+      {/* <button onClick={onAdd}> Agregar a carrito </button> */}
     </div>
   );
-};
+}
 
-export default Counter;
+export default ItemCount;
