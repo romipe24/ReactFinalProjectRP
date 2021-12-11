@@ -31,6 +31,7 @@ const Cart = () => {
                     <h1>{producto.name}</h1>
                   </Col>
                   <Col xs={6} md={3}>
+                    {/* aca tendria que de alguna forma asociar el counter */}
                     {producto.quantity}
                   </Col>
 
@@ -53,10 +54,11 @@ const Cart = () => {
             );
           })}
           <div className="btn-section">
+            <h4>Total a pagar: $UY {totalToPay()}</h4>
             <Link to={"/"}>
               <button className="btn-white">Continuar comprando</button>
             </Link>
-            <h4>Total a pagar: $UY {totalToPay()}</h4>
+
             <button className="btn-white btn-delete" onClick={vaciarCarrito}>
               Vaciar Carrito
             </button>
