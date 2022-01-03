@@ -1,4 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
+// import firebase from "firebase";
+// import "firebase/firestore";
+// import { getFirestore } from "../../Firebase/firebase";
 
 export const CartContext = createContext();
 
@@ -9,7 +12,14 @@ function CartContextProvider({ children }) {
   const [totalPay, setTotalPay] = useState([]);
 
   const addItem = (item) => {
-    setCarrito([...carrito, item]);
+    const index = carrito.findIndex((i) => i.id === item.id);
+    if (index > -1) {
+      const oldQy = carrito[index].quantity;
+      carrito.splice(index, 1);
+      setCarrito([...carrito, { ...item, quantity: item.quantity + oldQy }]);
+    } else {
+      setCarrito([...carrito, { ...item, quantity: item.quantity }]);
+    }
   };
 
   const subtotalProduct = (price, quantity) => {
@@ -32,6 +42,24 @@ function CartContextProvider({ children }) {
     setCarrito([]);
   };
 
+  const generarOrden = (e) => {
+    e.preventDefault();
+    const orden = {};
+    // orden.date = firebase.firestore.Timestamp.fromDate(new Date());
+    // Esto habria que poner con inputs
+    orden.buyer = { nombre: "Romi", email: "r@gmail.com", tel: "22222" };
+    orden.total = totalToPay();
+    orden.items = carrito.map((cartItem) => {
+      return {
+        id: cartItem.id,
+        nombre: cartItem.name,
+        cantidad: cartItem.quantity,
+        precio: cartItem.price * cartItem.quantity,
+      };
+    });
+    return console.log(orden);
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -42,6 +70,7 @@ function CartContextProvider({ children }) {
         removeItem,
         totalToPay,
         vaciarCarrito,
+        generarOrden,
       }}
     >
       {children}

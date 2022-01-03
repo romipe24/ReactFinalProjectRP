@@ -6,8 +6,14 @@ import { Link } from "react-router-dom";
 import "./Cart.css";
 
 const Cart = () => {
-  const { carrito, vaciarCarrito, removeItem, subtotalProduct, totalToPay } =
-    useCartContext();
+  const {
+    carrito,
+    vaciarCarrito,
+    removeItem,
+    subtotalProduct,
+    totalToPay,
+    generarOrden,
+  } = useCartContext();
 
   return (
     <div>
@@ -61,6 +67,10 @@ const Cart = () => {
 
             <button className="btn-white btn-delete" onClick={vaciarCarrito}>
               Vaciar Carrito
+            </button>
+
+            <button className="btn-white btn-delete" onClick={generarOrden}>
+              Generar Orden
             </button>
           </div>
         </Container>
