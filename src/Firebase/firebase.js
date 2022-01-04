@@ -19,3 +19,7 @@ const app = firebase.initializeApp(firebaseConfig);
 export function getFirestore() {
   return firebase.firestore(app);
 }
+
+// export const dataBase = fb.firestore();
+
+// export const getFirestore = () => db.firestore();

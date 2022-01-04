@@ -15,11 +15,14 @@ const ItemListContainer = ({ title }) => {
   //Variables
   const [data, setData] = useState([]);
   const [loader, setLoader] = useState(true);
-
+  const [bool, setBool] = useState(true);
   const { idCategoria } = useParams();
 
   //Fetch - LLamada a la API
   useEffect(() => {
+    //conexion con firestore
+    const dbQuery = getFirestore();
+
     if (idCategoria) {
       getData
         .then((res) => {

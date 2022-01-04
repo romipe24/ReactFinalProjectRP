@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import { useCartContext } from "../CartContext/CartContext";
 import { Link } from "react-router-dom";
 import "./Cart.css";
+import "firebase/firestore";
 
 const Cart = () => {
   const {
