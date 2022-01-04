@@ -22,11 +22,11 @@ function ItemCount({ stock = 1, onAdd }) {
   return (
     <div className="counter-wrapper">
       <div className="button" onClick={handlerClickLess}>
-        <i class="fas fa-angle-left"></i>
+        <i className="fas fa-angle-left"></i>
       </div>
       <input value={counter} />
       <div className="button" onClick={handlerClickMore}>
-        <i class="fas fa-angle-right"></i>
+        <i className="fas fa-angle-right"></i>
       </div>
       {/* Lo oculto pq no me anda  */}
       {/* <button onClick={onAdd}> Agregar a carrito </button> */}

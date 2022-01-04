@@ -23,19 +23,21 @@ const ItemListContainer = ({ title }) => {
   useEffect(() => {
     //conexion con firestore
     const dbQuery = getFirestore();
-
+    console.log("idCategoria=", idCategoria);
     if (idCategoria) {
+      console.log("[useEffect] Actualizando categoria" + idCategoria);
       dbQuery
         .collection("productos")
         .where("category", "==", idCategoria)
         .get() // traer todo
-        .then((res) =>
-          setData(res.docs.map((pro) => ({ id: pro.id, ...pro.data() })))
-        )
+        .then((res) => {
+          console.log(res.docs.map((pro) => ({ id: pro.id, ...pro.data() })));
+          setData(res.docs.map((pro) => ({ id: pro.id, ...pro.data() })));
+        })
         .catch((err) => console.log(err))
         .finally(() => setLoader(false));
-      console.log("hola");
     } else {
+      console.log("[useEffect] Actualizando todos los productos");
       dbQuery
         .collection("productos")
         .get() // traer todo
@@ -45,10 +47,7 @@ const ItemListContainer = ({ title }) => {
         .catch((err) => console.log(err))
         .finally(() => setLoader(false));
     }
-  }, []);
-
-  console.log(data);
-  console.log(idCategoria);
+  }, [idCategoria]);
 
   //   if (idCategoria) {
   //     getData

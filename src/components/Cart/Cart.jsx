@@ -14,6 +14,7 @@ const Cart = () => {
     subtotalProduct,
     totalToPay,
     generarOrden,
+    idOrder,
   } = useCartContext();
 
   return (
@@ -27,6 +28,10 @@ const Cart = () => {
         </div>
       ) : (
         <Container style={{ alignItems: "center" }}>
+          <section>
+            {idOrder !== "" && <label>El id de su orden es : {idOrder}</label>}
+          </section>
+
           {carrito.map((producto) => {
             return (
               <ListGroup>
@@ -53,7 +58,7 @@ const Cart = () => {
                       onClick={() => {
                         removeItem(producto.id);
                       }}
-                      class="far fa-trash-alt"
+                      className="far fa-trash-alt"
                     ></i>
                   </Col>
                 </Row>

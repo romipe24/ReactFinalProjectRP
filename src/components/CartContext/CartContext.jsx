@@ -12,6 +12,13 @@ export const useCartContext = () => useContext(CartContext);
 function CartContextProvider({ children }) {
   const [carrito, setCarrito] = useState([]);
   const [totalPay, setTotalPay] = useState([]);
+  const [idOrder, setIdOrder] = useState("");
+
+  React.useEffect(() => {
+    if (idOrder) {
+      alert("id order is = " + idOrder);
+    }
+  }, [idOrder]);
 
   const addItem = (item) => {
     const index = carrito.findIndex((i) => i.id === item.id);
@@ -66,7 +73,7 @@ function CartContextProvider({ children }) {
     dbQuery
       .collection("orders")
       .add(orden)
-      .then((resp) => console.log(resp));
+      .then((resp) => setIdOrder(resp.id));
   };
 
   return (
