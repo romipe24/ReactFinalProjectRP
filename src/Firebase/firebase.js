@@ -1,9 +1,9 @@
-import firebase from "firebase/app";
-import "firebase/firestore";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
-const firebaseConfig = {
+const app = firebase.initializeApp({
   apiKey: "AIzaSyDxhjkV0hd75GeaKxwN4W1WY5dot4sWHs0",
   authDomain: "romipeart-d7031.firebaseapp.com",
   projectId: "romipeart-d7031",
@@ -11,10 +11,10 @@ const firebaseConfig = {
   messagingSenderId: "897498096373",
   appId: "1:897498096373:web:0a9bc15b978ff4c4fadbbc",
   measurementId: "${config.measurementId}",
-};
+});
 
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
+// const app = firebase.initializeApp(firebaseConfig);
 
 export function getFirestore() {
   return firebase.firestore(app);

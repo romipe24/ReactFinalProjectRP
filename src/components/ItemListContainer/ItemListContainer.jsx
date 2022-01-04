@@ -8,6 +8,7 @@ import { getData } from "../../helpers/getData";
 import ItemList from "../ItemList/ItemList";
 import Loader from "./../Loader/Loader";
 import Hero from "../Carousel/Carousel";
+import { getFirestore } from "../../Firebase/firebase";
 
 import { useParams } from "react-router-dom";
 
@@ -24,37 +25,65 @@ const ItemListContainer = ({ title }) => {
     const dbQuery = getFirestore();
 
     if (idCategoria) {
-      getData
-        .then((res) => {
-          console.log(idCategoria);
-          setData(res.filter((product) => product.category === idCategoria));
-        })
+      dbQuery
+        .collection("productos")
+        .where("category", "==", idCategoria)
+        .get() // traer todo
+        .then((res) =>
+          setData(res.docs.map((pro) => ({ id: pro.id, ...pro.data() })))
+        )
         .catch((err) => console.log(err))
         .finally(() => setLoader(false));
+      console.log("hola");
     } else {
-      getData
-        .then((res) => {
-          console.log(res);
-          setData(res);
-        })
+      dbQuery
+        .collection("productos")
+        .get() // traer todo
+        .then((res) =>
+          setData(res.docs.map((pro) => ({ id: pro.id, ...pro.data() })))
+        )
         .catch((err) => console.log(err))
         .finally(() => setLoader(false));
     }
-  }, [idCategoria]);
+  }, []);
+
+  console.log(data);
+  console.log(idCategoria);
+
+  //   if (idCategoria) {
+  //     getData
+  //       .then((res) => {
+  //         console.log(idCategoria);
+  //         setData(res.filter((product) => product.category === idCategoria));
+  //       })
+  //       .catch((err) => console.log(err))
+  //       .finally(() => setLoader(false));
+  //   } else {
+  //     getData
+  //       .then((res) => {
+  //         console.log(res);
+  //         setData(res);
+  //       })
+  //       .catch((err) => console.log(err))
+  //       .finally(() => setLoader(false));
+  //   }
+  // }, [idCategoria]);
 
   /* console.log(data) */
   return (
-    <main>
-      <Hero />
-      <Container fluid className="d-flex justify-content-center">
-        <Row className="d-flex justify-content-center">
-          <Col lg="11">
-            <h1>{title}</h1>
-            {loader ? <Loader /> : <ItemList products={data} />}
-          </Col>
-        </Row>
-      </Container>
-    </main>
+    <div className="App">
+      <main>
+        <Hero />
+        <Container fluid className="d-flex justify-content-center">
+          <Row className="d-flex justify-content-center">
+            <Col lg="11">
+              <h1>{title}</h1>
+              {loader ? <Loader /> : <ItemList products={data} />}
+            </Col>
+          </Row>
+        </Container>
+      </main>
+    </div>
   );
 };
 

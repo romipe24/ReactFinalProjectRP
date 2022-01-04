@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState } from "react";
 
-// import "firebase/firestore";
-// import firebase from "firebase";
-import { getFirestore } from "@firebase/firestore";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
+
+import { getFirestore } from "../../Firebase/firebase";
 
 export const CartContext = createContext();
 
@@ -46,7 +47,7 @@ function CartContextProvider({ children }) {
   const generarOrden = (e) => {
     e.preventDefault();
     const orden = {};
-    //orden.date = db.firestore.Timestamp.fromDate(new Date());
+    orden.date = firebase.firestore.Timestamp.fromDate(new Date());
     // Esto habria que poner con inputs
     orden.buyer = { nombre: "Romi", email: "r@gmail.com", tel: "22222" };
     orden.total = totalToPay();
@@ -58,7 +59,14 @@ function CartContextProvider({ children }) {
         precio: cartItem.price * cartItem.quantity,
       };
     });
-    return console.log(orden);
+
+    //return console.log(orden);
+
+    const dbQuery = getFirestore();
+    dbQuery
+      .collection("orders")
+      .add(orden)
+      .then((resp) => console.log(resp));
   };
 
   return (
