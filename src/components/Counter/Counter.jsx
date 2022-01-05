@@ -16,9 +16,6 @@ function ItemCount({ stock = 1, onAdd }) {
     setCounter(counter + 1);
   };
 
-  function Saludar() {
-    console.log("saludar ");
-  }
   return (
     <div className="counter-wrapper">
       <div className="button" onClick={handlerClickLess}>
@@ -28,8 +25,6 @@ function ItemCount({ stock = 1, onAdd }) {
       <div className="button" onClick={handlerClickMore}>
         <i className="fas fa-angle-right"></i>
       </div>
-      {/* Lo oculto pq no me anda  */}
-      {/* <button onClick={onAdd}> Agregar a carrito </button> */}
     </div>
   );
 }

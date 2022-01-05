@@ -61,19 +61,43 @@ function CartContextProvider({ children }) {
     orden.items = carrito.map((cartItem) => {
       return {
         id: cartItem.id,
-        nombre: cartItem.name,
-        cantidad: cartItem.quantity,
-        precio: cartItem.price * cartItem.quantity,
+        name: cartItem.name,
+        quantity: cartItem.quantity,
+        price: cartItem.price * cartItem.quantity,
       };
     });
 
-    //return console.log(orden);
-
-    const dbQuery = getFirestore();
+    const dbQuery = getFirestore(); //llamo a Firestore
+    //Agrego ordenes
     dbQuery
       .collection("orders")
       .add(orden)
       .then((resp) => setIdOrder(resp.id));
+
+    //Actualiza todos los items que estan en el listado de Cart del CartContext
+    const itemsToUpdate = dbQuery.collection("productos").where(
+      firebase.firestore.FieldPath.documentId(), //traigo todos los productos de firebase
+      "in", //in obtiene elementos por su id
+      carrito.map((i) => i.id) // que esten en el carrito
+    );
+
+    const batch = dbQuery.batch(); //me crea iuna instancia
+
+    itemsToUpdate
+      .get() // los traigo
+
+      .then((collection) => {
+        collection.docs.forEach((docSnapshot) => {
+          batch.update(docSnapshot.ref, {
+            stock:
+              docSnapshot.data().stock -
+              carrito.find((item) => item.id === docSnapshot.id).quantity,
+          });
+        });
+        batch.commit().then((res) => {
+          console.log("se actualizo el stock");
+        });
+      });
   };
 
   return (
