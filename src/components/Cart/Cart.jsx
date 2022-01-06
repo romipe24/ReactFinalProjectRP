@@ -1,5 +1,13 @@
 import React from "react";
-import { Col, Container, ListGroup, Row, Image, Card } from "react-bootstrap";
+import {
+  Col,
+  Container,
+  ListGroup,
+  Row,
+  Image,
+  Card,
+  Table,
+} from "react-bootstrap";
 import { useCartContext } from "../CartContext/CartContext";
 import { Link } from "react-router-dom";
 import "./Cart.css";
@@ -42,38 +50,77 @@ const Cart = () => {
           <section>
             {idOrder !== "" && <label>El id de su orden es : {idOrder}</label>}
           </section>
+          <Table>
+            <thead>
+              <tr>
+                <th width="60px"> #</th>
+                <th width="50px"></th>
+                <th width="400px">Nombre</th>
+                <th width="200px"> Cantidad</th>
+                <th width="200px">Precio</th>
+                <th width="200px">Subtotal</th>
+                <th width="100px">Borrar</th>
+              </tr>
+            </thead>
+          </Table>
 
           {carrito.map((producto) => {
             return (
-              <ListGroup>
-                <Row>
-                  <Col xs={6} md={3}>
-                    <Image src={producto.image} width="100px" />
-                  </Col>
-                  <Col xs={6} md={3}>
-                    <h1>{producto.name}</h1>
-                  </Col>
-                  <Col xs={6} md={3}>
-                    {/* aca tendria que de alguna forma asociar el counter */}
-                    {producto.quantity}
-                  </Col>
+              <Table>
+                <tbody>
+                  <tr>
+                    <td width="60px">{producto.id}</td>
+                    <td width="50px">
+                      <Image src={producto.image} />
+                    </td>
+                    <td width="400px">
+                      <h3>{producto.name}</h3>
+                    </td>
+                    <td width="200px">{producto.quantity}</td>
+                    <td width="200px"> $UY {parseFloat(producto.price)}</td>
+                    <td width="200px">
+                      $UY {subtotalProduct(producto.price, producto.quantity)}
+                    </td>
+                    <td width="100px">
+                      <i
+                        onClick={() => {
+                          removeItem(producto.id);
+                        }}
+                        className="far fa-trash-alt"
+                      ></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </Table>
+              // <ListGroup>
+              //   <Row>
+              //     <Col xs={6} md={3}>
+              //       <Image src={producto.image} width="100px" />
+              //     </Col>
+              //     <Col xs={6} md={3}>
+              //       <h1>{producto.name}</h1>
+              //     </Col>
+              //     <Col xs={6} md={3}>
+              //       {/* aca tendria que de alguna forma asociar el counter */}
+              //       {producto.quantity}
+              //     </Col>
 
-                  <Col xs={6} md={3}>
-                    $UY {parseFloat(producto.price)}
-                  </Col>
-                  <Col>
-                    $UY {subtotalProduct(producto.price, producto.quantity)}
-                  </Col>
-                  <Col>
-                    <i
-                      onClick={() => {
-                        removeItem(producto.id);
-                      }}
-                      className="far fa-trash-alt"
-                    ></i>
-                  </Col>
-                </Row>
-              </ListGroup>
+              //     <Col xs={6} md={3}>
+              //       $UY {parseFloat(producto.price)}
+              //     </Col>
+              //     <Col>
+              //       $UY {subtotalProduct(producto.price, producto.quantity)}
+              //     </Col>
+              //     <Col>
+              //       <i
+              //         onClick={() => {
+              //           removeItem(producto.id);
+              //         }}
+              //         className="far fa-trash-alt"
+              //       ></i>
+              //     </Col>
+              //   </Row>
+              // </ListGroup>
             );
           })}
           <div className="btn-section">

@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { useCartContext } from "../CartContext/CartContext";
 import ItemCount from "../Counter/Counter";
+import "./ItemDetail.css";
 
 const ItemDetail = ({ producto }) => {
   const [counter, setCounter] = useState(1);

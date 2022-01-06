@@ -12,7 +12,7 @@ const Item = ({ product }) => {
   return (
     <Col className="col" lg={3} key={id}>
       <Card>
-        <Card.Img variant="top" src={image} />
+        <Card.Img className="CardImgSize" variant="top" src={image} />
         <Card.Body>
           <Card.Title>{name}</Card.Title>
           <Card.Text>
